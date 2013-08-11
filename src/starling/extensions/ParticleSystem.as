@@ -551,7 +551,7 @@ package starling.extensions
             }
         }
         public function get isEmitting():Boolean { return mEmissionTime > 0 && mEmissionRate > 0; }
-        public function get capacity():int { return mRawVertexData.length / BYTES_PER_VERTEX * 4; }
+        public function get capacity():int { return mRawVertexData.length / (BYTES_PER_VERTEX * 4); }
         public function get numParticles():int { return mNumParticles; }
         
         public function get maxCapacity():int { return mMaxCapacity; }
