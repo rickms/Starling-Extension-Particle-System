@@ -356,18 +356,18 @@ package starling.extensions
                 xOffset = textureWidth  * particle.scale >> 1;
                 yOffset = textureHeight * particle.scale >> 1;
                 
+                if(mPremultipliedAlpha && alpha < MIN_ALPHA_PMA)
+                    alpha = MIN_ALPHA_PMA;
+                
+                var rgba:uint = ((color << 8) & 0xffffff00) | (int(alpha * 255.0) & 0xff);
+                
+                if (mPremultipliedAlpha) rgba = premultiplyAlpha(rgba);
+                
+                rgba = switchEndian(rgba);
+                
                 for (var j:int=0; j<4; ++j) {
-                    
-                    if(mPremultipliedAlpha && alpha < MIN_ALPHA_PMA)
-                    	alpha = MIN_ALPHA_PMA;
-                    
-                    var rgba:uint = ((color << 8) & 0xffffff00) | (int(alpha * 255.0) & 0xff);
-                    
-                    if (mPremultipliedAlpha) rgba = premultiplyAlpha(rgba);
-                    
                     mRawVertexData.position = (vertexID+j) * BYTES_PER_VERTEX + COLOR_OFFSET_IN_BYTES;
-                    mRawVertexData.writeUnsignedInt(switchEndian(rgba));
-
+                    mRawVertexData.writeUnsignedInt(rgba);
                 }
                 
                 if (rotation)
